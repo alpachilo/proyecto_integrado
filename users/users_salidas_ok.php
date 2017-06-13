@@ -63,7 +63,7 @@
       <?php
 
         //CREATING THE CONNECTION
-        $connection = new mysqli("localhost", "id1003383_root", "123456", "id1003383_bajamar");
+        $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
         $connection->set_charset("utf8");
 
         //TESTING IF THE CONNECTION WAS RIGHT

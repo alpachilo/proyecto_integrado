@@ -14,7 +14,8 @@
   <style>
   </style>
 </head>
-<body>
+<body class=" <?php  print_r($color); ?>">
+
 
 <div class="container-fluid text-center">
 

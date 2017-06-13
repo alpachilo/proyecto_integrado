@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <?php
   session_start();
- ?>
+  $color = 'estilos.css';
+  if(isset($_SESSION['id_usuario'])){
+    /* Abrir conexión con la base de datos */
+    $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
+    $connection->set_charset("utf8");
+    /* Realizar una consulta para extraer el color del usuario actual */
+    $consulta="SELECT color from usuarios WHERE id_usuario = '".$_SESSION['id_usuario']."'LIMIT 1;";
+    if ($result = $connection->query($consulta)){
+      $fila = $result->fetch_assoc();
+      $color = $fila['color'];
+    }
+    $_SESSION['tema'] = $color;
+
+
+  }?>
 <html lang="en">
 <head>
   <title>C.D. Bajamar</title>
@@ -11,9 +25,16 @@
   <link rel="stylesheet" href="../bootstrap/css/estilos.css">
   <script src="../bootstrap/js/jquery.min.js"></script>
   <script src="../bootstrap/js/bootstrap.min.js"></script>
-  <style></style>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  <script src="../bootstrap/js/graficas.js"></script>
+
 </head>
-<body>
+<body class=" <?php  print_r($color); ?>">
+
+<input id="valor1" hidden value="30">
 
 <div class="container-fluid text-center">
 
@@ -25,7 +46,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" rel="home" href="../users/index_usuario.php" title="Buy Sell Rent Everyting">
+        <a class="navbar-brand" rel="home" href="../users/index_usuario.php" title="Contacto">
           <img style="max-width:100px; margin-top: -15px;"
                src="../Imagenes/logo2.jpg"></a>
       </div>
@@ -53,6 +74,7 @@
       </div>
     </div>
   </nav>
+<div id="myfirstchart" style="height: 250px;"></div>
 
 <div class="container-fluid text-center">
   <div class="row content">
