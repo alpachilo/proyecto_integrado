@@ -6,7 +6,8 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href=" ">
     </head>
-    <body>
+    <body class=" <?php  print_r($color); ?>">
+
 
 
       <?php
@@ -15,7 +16,7 @@
         die("Tienes que pasar algun parametro por GET.");
         $id_c = $_GET['id_c'];
         $id_u = $_GET['id_u'];
-        $connection = new mysqli("localhost", "id1003383_root", "123456", "id1003383_bajamar");
+        $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
 
             if ($result = $connection->query("DELETE FROM suscribe
              where id_curso='$id_c' and id_usuario='$id_u'")) {

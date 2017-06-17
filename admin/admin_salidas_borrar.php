@@ -6,7 +6,8 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href=" ">
     </head>
-    <body>
+    <body class=" <?php  print_r($color); ?>">
+
 
       <?php
         session_start();

@@ -11,7 +11,8 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <style></style>
     </head>
-    <body>
+    <body class=" <?php  print_r($color); ?>">
+
       <div class="container-fluid text-center">
         <nav class="navbar navbar-inverse">
           <div class="container-fluid">
@@ -33,6 +34,7 @@
                 <li><a href="admin_material.php">Material</a></li>
                 <li><a href="admin_usuarios.php">Usuarios</a></li>
                 <li class="active"><a href="admin_salidas.php">Salidas</a></li>
+                <li><a href="admin_panel.php">Panel</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <?php
@@ -63,7 +65,7 @@
                 <?php
                 $id = $_GET['id'];
                 //CREATING THE CONNECTION
-                $connection = new mysqli("localhost", "id1003383_root", "123456", "id1003383_bajamar");
+                $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
                 $connection->set_charset("utf8");
 
                 //TESTING IF THE CONNECTION WAS RIGHT

@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<?php
+  session_start();
+  $color = 'estilos.css';
+  if(isset($_SESSION['tema'])){
+    /* Abrir conexión con la base de datos */
+    $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
+    $connection->set_charset("utf8");
+    /* Realizar una consulta para extraer el color del usuario actual */
+    $consulta="SELECT color from usuarios WHERE id_usuario = '".$_SESSION['id_usuario']."'LIMIT 1;";
+    if ($result = $connection->query($consulta)){
+      $fila = $result->fetch_assoc();
+      $color = $fila['color'];
+    }
+    $_SESSION['tema'] = $color;
+  }?>
 <html lang="">
   <head>
     <title>C.D. Bajamar</title>
@@ -11,7 +26,8 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <style></style>
     </head>
-    <body>
+    <body class=" <?php  print_r($color); ?>">
+
 
       <div class="container-fluid text-center">
         <nav class="navbar navbar-inverse">
@@ -34,6 +50,7 @@
                 <li><a href="admin_material.php">Material</a></li>
                 <li class="active"><a href="admin_usuarios.php">Usuarios</a></li>
                 <li><a href="admin_salidas.php">Salidas</a></li>
+                <li><a href="admin_panel.php">Panel</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <?php
@@ -66,7 +83,7 @@
               if (isset($_POST['enviar'])) {
 
                 //CREATING THE CONNECTION
-                $connection = new mysqli("localhost", "id1003383_root", "123456", "id1003383_bajamar");
+                $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
                 $connection->set_charset("utf8");
 
                 //TESTING IF THE CONNECTION WAS RIGHT
@@ -113,22 +130,23 @@
                   <title></title>
                   <link rel="stylesheet" type="text/css" href=" ">
                   </head>
-                  <body>
+                  <body class=" <?php  print_r($color); ?>">
+
 
                     <?php
 
                       echo "<form method='post' id='formulario'>";
-                      echo "<span><b>DNI:</b></span> <input type='text' name='dni' value=''\><br><br>";
-                      echo "<span><b>Nombre:</b></span> <input type='text' name='nombre' value=''\><br><br>";
-                      echo "<span><b>F. Nacimiento:</b></span> <input type='date' name='fecha_naci' value=''\><br><br>";
-                      echo "<span><b>Direccion:</b></span> <input type='text' name='direccion' value=''\><br><br>";
-                      echo "<span><b>Ciudad:</b></span> <input type='text' name='ciudad' value=''\><br><br>";
-                      echo "<span><b>Provincia:</b></span> <input type='text' name='provincia' value=''\><br><br>";
-                      echo "<span><b>C. Postal:</b></span> <input type='text' name='codigo_postal' value=''\><br><br>";
-                      echo "<span><b>Teléfono:</b></span> <input type='text' name='telefono' value=''\><br><br>";
-                      echo "<span><b>Email:</b></span> <input type='text' name='email' value=''\><br><br>";
-                      echo "<span><b>Tipo usuario:</b></span> <input type='text' name='tipo' value=''\><br><br>";
-                      echo "<span><b>Contraseña:</b></span> <input type='text' name='tipo' value=''\><br><br>";
+                      echo "<span><b>DNI:</b></span> <input type='text' name='dni' value='$obj->dni'\><br><br>";
+                      echo "<span><b>Nombre:</b></span> <input type='text' name='nombre' value='$obj->nombre'\><br><br>";
+                      echo "<span><b>F. Nacimiento:</b></span> <input type='date' name='fecha_naci' value='$obj->fecha_naci'\><br><br>";
+                      echo "<span><b>Direccion:</b></span> <input type='text' name='direccion' value='$obj->direccion'\><br><br>";
+                      echo "<span><b>Ciudad:</b></span> <input type='text' name='ciudad' value='$obj->ciudad'\><br><br>";
+                      echo "<span><b>Provincia:</b></span> <input type='text' name='provincia' value='$obj->provincia'\><br><br>";
+                      echo "<span><b>C. Postal:</b></span> <input type='text' name='codigo_postal' value='$obj->codigo_postal'\><br><br>";
+                      echo "<span><b>Teléfono:</b></span> <input type='text' name='telefono' value='$obj->telefono'\><br><br>";
+                      echo "<span><b>Email:</b></span> <input type='text' name='email' value='$obj->email'\><br><br>";
+                      echo "<span><b>Tipo usuario:</b></span> <input type='text' name='tipo' value='$obj->tipo'\><br><br>";
+                      echo "<span><b>Contraseña:</b></span> <input type='text' name='tipo' value='$obj->pass'\><br><br>";
 
                       echo "<button type=\"submit\"name='enviar'>Enviar</button>";
                       echo "</from>";

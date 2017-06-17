@@ -6,7 +6,8 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href=" ">
     </head>
-    <body>
+    <body class=" <?php  print_r($color); ?>">
+
 
 
       <?php
@@ -14,7 +15,7 @@
         if (empty($_GET))
         die("Tienes que pasar algun parametro por GET.");
         $a = $_GET['id'];
-        $connection = new mysqli("localhost", "id1003383_root", "123456", "id1003383_bajamar");
+        $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
 
             if ($result = $connection->query("DELETE FROM material
              where id_material='$a'")) {
