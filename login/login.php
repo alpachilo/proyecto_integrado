@@ -21,7 +21,7 @@
         if (isset($_POST["user"])) {
 
           //CREATING THE CONNECTION
-          $connection = new mysqli("localhost", "id1003383_root", "123456", "id1003383_bajamar");
+          $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
 
           //TESTING IF THE CONNECTION WAS RIGHT
           if ($connection->connect_errno) {
