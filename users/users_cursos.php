@@ -71,8 +71,8 @@
   <div class="row content">
 
     <div class="col-sm-12 text-left">
-      <br>
-      <br>
+
+      <br><br>
       <p align="justify">Estos son los <b>cursos disponibles</b> que ofrecemos actualmente, <b>si estas interesado en inscribirte
          pulsa en el "tick verde"</b>, una vez inscrito nos comunicaremos contigo para proporcionarte mas información.</p>
       <br>
@@ -145,6 +145,14 @@
             </div>
 
             <br>
+
+            <div class="col-sm-12 text-center">
+              <input type ='button' value = 'IMPRIMIR PDF' onclick="window.open('../fpdf/print_cursos_users.php', 'width=800,height=600');"/>
+              <br><br>
+              <p align="center"><b>Aquí podrás imprimir los cursos en que estás matriculado.</b></p>
+              <br><br>
+
+            </div>
 
     </div>
 

@@ -4,12 +4,12 @@
   $color = 'estilos.css';
   if(isset($_SESSION['id_usuario'])){
     /* Abrir conexión con la base de datos */
-    $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
-    $connection->set_charset("utf8");
+    $conn = new mysqli("localhost", "root", "madeinsp1", "bajamar");
+    $conn->set_charset("utf8");
     /* Realizar una consulta para extraer el color del usuario actual */
     $consulta="SELECT color from usuarios WHERE id_usuario = '".$_SESSION['id_usuario']."'LIMIT 1;";
-    if ($result = $connection->query($consulta)){
-      $fila = $result->fetch_assoc();
+    if ($res = $conn->query($consulta)){
+      $fila = $res->fetch_assoc();
       $color = $fila['color'];
     }
     $_SESSION['tema'] = $color;
@@ -32,12 +32,65 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-  <script src="../bootstrap/js/graficas.js"></script>
-  <style></style>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <style>${demo.css}</style>
+  <script type="text/javascript">
+$(function () {
+  $('#container').highcharts({
+      chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false
+      },
+      title: {
+          text: 'Porcentaje del precio de cursos'
+      },
+      tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+          pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                  enabled: true,
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                  style: {
+                      color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                  }
+              }
+          }
+      },
+      series: [{
+          type: 'pie',
+          name: 'Deudores',
+          data: [
+
+    <?php
+    $sql=$conn->query("select * from curso");
+    while($res=$sql->fetch_assoc()){
+    ?>
+
+              ['<?php echo $res['nombre']; ?>', <?php echo $res['precio']; ?>],
+
+    <?php
+    }
+    ?>
+
+          ]
+      }]
+  });
+});
+
+
+</script>
 </head>
 <body class=" <?php  print_r($color); ?>">
+  <script src="../Highcharts-4.1.5/js/highcharts.js"></script>
+  <script src="../Highcharts-4.1.5/js/modules/exporting.js"></script>
 
-  <input id="valor1" hidden value="30">
+
+  <!--<input id="valor1" hidden value="30">-->
 
 <div class="container-fluid text-center">
   <nav class="navbar navbar-inverse <?php print_r($color); ?>">
@@ -78,30 +131,48 @@
     </div>
   </nav>
 
+  <div class="container-fluid text-center">
+    <div class="row content">
 
-<div class="container-fluid text-center">
-  <div class="row content">
     <div class="col-xs-12">
-      <form action="cambiar_color.php" method="post">
-        <h2>Cambia tu estilo visual</h2>
-      <div class="form-group">
-        <select class="form-control" name="color">
-          <?php var_dump($_SESSION);?>
-          <option value="1"  <?php if(isset($_SESSION['tema']) && $_SESSION['tema']=="estilo1"){print_r("selected");}?>>Rojo</option>
-          <option value="2" <?php if(isset($_SESSION['tema']) && $_SESSION['tema']=="estilo2"){print_r("selected");}?>>Azul</option>
-          <option value="3" <?php if(isset($_SESSION['tema']) && $_SESSION['tema']=="estilo3"){print_r("selected");}?>>Amarillo</option>
-          <option value="4" <?php if(isset($_SESSION['tema']) && $_SESSION['tema']=="estilo4"){print_r("selected");}?>>Verde</option>
-        </select>
-      </div>
-      <div class="form-group">
-          <button type="submit" name="action" value="cambiar_color" class="btn btn-success col-xs-12">Cambiar</button>
-        </div>
-      </form>
+      <img src="../Imagenes/foto_panel2.jpg" class="img-responsive" style="margin: 0 auto;" alt="OK">
+      <p>Este es tu <b>panel de usuario</b> en el que encontrarás tus cursos inscritos y los registros
+        de tus salidas, además como novedad encontrarás algunos gráficos para comprender mejor datos de
+        nuestra web. Si necesitas modificar algun registro comunicate con nosotros a través del
+        formulario de contacto.</p>
+      <hr size="10" />
     </div>
 
 
-    <img src="../Imagenes/foto_panel2.jpg" class="img-responsive" style="margin: 0 auto;" alt="OK">
-    <p>Este es tu <b>panel de usuario</b> en el que encontrarás tus cursos inscritos y los registros de tus salidas, si necesitas modificar algun registro comunicate con nosotros a través del formulario de contacto.</p>
+
+    <div class="col-xs-12">
+      <form action="cambiar_color.php" method="post">
+        <h2>Cambia tu estilo visual</h2>
+        <div class="row">
+          <div class="col-md-2 col-md-offset-5">
+            <div class="form-group">
+              <select class="form-control" name="color">
+                <?php var_dump($_SESSION);?>
+                <option value="1" <?php if(isset($_SESSION['tema']) && $_SESSION['tema']=="estilo1"){print_r("selected");}?>>Rojo</option>
+                <option value="2" <?php if(isset($_SESSION['tema']) && $_SESSION['tema']=="estilo2"){print_r("selected");}?>>Azul</option>
+                <option value="3" <?php if(isset($_SESSION['tema']) && $_SESSION['tema']=="estilo3"){print_r("selected");}?>>Amarillo</option>
+                <option value="4" <?php if(isset($_SESSION['tema']) && $_SESSION['tema']=="estilo4"){print_r("selected");}?>>Verde</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" name="action" value="cambiar_color" class="btn btn-success col-xs-12">Cambiar</button>
+            </div>
+          </div>
+        </div>
+
+
+      </form>
+      <hr size="10" />
+    </div>
+
+
+    <hr size="10" />
+
     <div class="col-sm-12 text-left">
       <?php
         //CREATING THE CONNECTION
@@ -193,20 +264,16 @@
                 } //END OF THE IF CHECKING IF THE QUERY WAS RIGHT
               ?>
               </table>
-              <br>
-              <br>
             </div>
     </div>
 
+    <div class="col-xs-12">
+        <hr size="10" />
+      <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+        <hr size="10" />
+    </div>
 
-        <br><br><br><br><br><br><br><br>
 
-        <div class="col-xs-12">
-          <h2>Grafica de cursos</h2>
-          <div id="myfirstchart" style="height: 250px;"></div>
-        </div>
-
-        <br><br><br><br>
 
       <div class="row">
         <?php include ("../includes/footer.php"); ?>
