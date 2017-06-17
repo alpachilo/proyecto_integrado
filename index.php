@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <?php
   session_start();
+  $color = 'estilos.css';
+  if(isset($_SESSION['tema'])){
+    /* Abrir conexión con la base de datos */
+    $connection = new mysqli("localhost", "root", "madeinsp1", "bajamar");
+    $connection->set_charset("utf8");
+    /* Realizar una consulta para extraer el color del usuario actual */
+    $consulta="SELECT color from usuarios WHERE id_usuario = '".$_SESSION['id_usuario']."'LIMIT 1;";
+    if ($result = $connection->query($consulta)){
+      $fila = $result->fetch_assoc();
+      $color = $fila['color'];
+    }
+    $_SESSION['tema'] = $color;
+  }?>
+<?php
+  session_start();
  ?>
 <html lang="en">
 <head>
@@ -13,7 +28,7 @@
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <style></style>
 </head>
-<body>
+<body class=" <?php  print_r($color); ?>">
 
   <div class="container-fluid text-center">
     <nav class="navbar navbar-inverse">
