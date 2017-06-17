@@ -1,0 +1,25 @@
+
+button{
+  width: 40%;
+  border: 0;
+  padding: 13px;
+  font-size: 15px;
+  background-color:#b3d1e9;
+  border-radius:20px;
+  color: black;
+
+}
+button:hover{
+  background-color: #8dc1eb;
+}
+
+#formulario *{
+  display: inline-block;
+}
+#formulario span{
+  width: 100px;
+}
+
+span{
+
+}
